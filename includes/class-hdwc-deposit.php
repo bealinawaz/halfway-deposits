@@ -2,7 +2,7 @@
 /**
  * Cart calculation: turns the order into a deposit plus a balance line.
  *
- * @package Fixed_Deposit_For_WooCommerce
+ * @package Halfway_Deposits
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -14,10 +14,10 @@ defined( 'ABSPATH' ) || exit;
  * balance line carries no tax. WooCommerce normally spreads tax over negative fees,
  * so the plugin removes the tax from its own line in the cart and on the order.
  */
-final class FDWC_Deposit {
+final class HDWC_Deposit {
 
-	const FEE_ID   = 'fdwc_balance';
-	const ITEM_KEY = '_fdwc_balance_line';
+	const FEE_ID   = 'hdwc_balance';
+	const ITEM_KEY = '_hdwc_balance_line';
 
 	/**
 	 * Split calculated for the cart in this request, or null when no deposit applies.
@@ -76,10 +76,10 @@ final class FDWC_Deposit {
 		if ( $cart->is_empty() ) {
 			return false;
 		}
-		if ( ! FDWC_Settings::limited_to_categories() ) {
+		if ( ! HDWC_Settings::limited_to_categories() ) {
 			return true;
 		}
-		$selected = FDWC_Settings::categories();
+		$selected = HDWC_Settings::categories();
 		if ( ! $selected ) {
 			return false;
 		}
@@ -106,7 +106,7 @@ final class FDWC_Deposit {
 	public static function add_balance_fee( $cart ) {
 		self::$split = null;
 
-		if ( ( is_admin() && ! wp_doing_ajax() ) || ! FDWC_Settings::enabled() || ! self::cart_qualifies( $cart ) ) {
+		if ( ( is_admin() && ! wp_doing_ajax() ) || ! HDWC_Settings::enabled() || ! self::cart_qualifies( $cart ) ) {
 			return;
 		}
 
@@ -124,14 +124,14 @@ final class FDWC_Deposit {
 			}
 		}
 
-		$min_total = FDWC_Settings::min_total();
+		$min_total = HDWC_Settings::min_total();
 		if ( $min_total > 0 && $products < $min_total ) {
 			return;
 		}
 
 		$order_value = round( $products + $shipping + $fees, $decimals );
-		$base        = 'split' === FDWC_Settings::shipping() ? $order_value : round( $products + $fees, $decimals );
-		$deposit     = 'percent' === FDWC_Settings::type() ? $base * FDWC_Settings::amount() / 100 : FDWC_Settings::amount();
+		$base        = 'split' === HDWC_Settings::shipping() ? $order_value : round( $products + $fees, $decimals );
+		$deposit     = 'percent' === HDWC_Settings::type() ? $base * HDWC_Settings::amount() / 100 : HDWC_Settings::amount();
 		$deposit     = round( $deposit, $decimals );
 
 		// Nothing to defer when the order is already at or below the deposit.
@@ -147,7 +147,7 @@ final class FDWC_Deposit {
 		$cart->fees_api()->add_fee(
 			array(
 				'id'      => self::FEE_ID,
-				'name'    => FDWC_Settings::label(),
+				'name'    => HDWC_Settings::label(),
 				'amount'  => -1 * $balance,
 				'taxable' => false,
 			)
@@ -216,7 +216,8 @@ final class FDWC_Deposit {
 	 * @param WC_Order_Item_Fee $item Order fee item.
 	 */
 	public static function untax_order_fee( $item ) {
-		if ( 'yes' === $item->get_meta( self::ITEM_KEY ) ) {
+		// "_fdwc_balance_line" marks balance lines on orders placed with version 2.0.0 and earlier.
+		if ( 'yes' === $item->get_meta( self::ITEM_KEY ) || 'yes' === $item->get_meta( '_fdwc_balance_line' ) ) {
 			$item->set_taxes( false );
 		}
 	}
@@ -227,7 +228,7 @@ final class FDWC_Deposit {
 	 * @return bool
 	 */
 	private static function cart_has_deposit() {
-		if ( ! function_exists( 'WC' ) || ! WC()->cart || ! FDWC_Settings::enabled() ) {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || ! HDWC_Settings::enabled() ) {
 			return false;
 		}
 		if ( null === self::$split && ! did_action( 'woocommerce_after_calculate_totals' ) ) {
@@ -244,7 +245,7 @@ final class FDWC_Deposit {
 		if ( ! self::cart_has_deposit() ) {
 			return;
 		}
-		echo '<div class="woocommerce-info fdwc-notice" role="status">' . esc_html( FDWC_Settings::notice() ) . '</div>';
+		echo '<div class="woocommerce-info hdwc-notice" role="status">' . esc_html( HDWC_Settings::notice() ) . '</div>';
 	}
 
 	/**
@@ -258,7 +259,7 @@ final class FDWC_Deposit {
 		if ( is_admin() || wp_is_json_request() || ! self::cart_has_deposit() ) {
 			return $content;
 		}
-		$notice = '<div class="wc-block-components-notice-banner is-info fdwc-notice" role="status"><div class="wc-block-components-notice-banner__content">' . esc_html( FDWC_Settings::notice() ) . '</div></div>';
+		$notice = '<div class="wc-block-components-notice-banner is-info hdwc-notice" role="status"><div class="wc-block-components-notice-banner__content">' . esc_html( HDWC_Settings::notice() ) . '</div></div>';
 		return $notice . $content;
 	}
 }

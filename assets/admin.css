@@ -1,4 +1,4 @@
-.fdwc-support {
+.hdwc-support {
 	max-width: 960px;
 	margin: 32px 0 0;
 	padding: 4px 20px 12px;
@@ -7,7 +7,7 @@
 	border-left: 4px solid #2271b1;
 }
 
-.fdwc-support__actions {
+.hdwc-support__actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;

@@ -2,7 +2,7 @@
 /**
  * Deposit settings.
  *
- * @package Fixed_Deposit_For_WooCommerce
+ * @package Halfway_Deposits
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,17 +10,17 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Reads and validates the settings saved on WooCommerce → Settings → Deposit.
  */
-final class FDWC_Settings {
+final class HDWC_Settings {
 
-	const ENABLED    = 'fdwc_enabled';
-	const TYPE       = 'fdwc_type';
-	const AMOUNT     = 'fdwc_amount';
-	const SHIPPING   = 'fdwc_shipping';
-	const MIN_TOTAL  = 'fdwc_min_total';
-	const SCOPE      = 'fdwc_scope';
-	const CATEGORIES = 'fdwc_categories';
-	const LABEL      = 'fdwc_label';
-	const NOTICE     = 'fdwc_notice';
+	const ENABLED    = 'hdwc_enabled';
+	const TYPE       = 'hdwc_type';
+	const AMOUNT     = 'hdwc_amount';
+	const SHIPPING   = 'hdwc_shipping';
+	const MIN_TOTAL  = 'hdwc_min_total';
+	const SCOPE      = 'hdwc_scope';
+	const CATEGORIES = 'hdwc_categories';
+	const LABEL      = 'hdwc_label';
+	const NOTICE     = 'hdwc_notice';
 
 	/**
 	 * All option names, for uninstall and tests.
@@ -29,6 +29,31 @@ final class FDWC_Settings {
 	 */
 	public static function option_names() {
 		return array( self::ENABLED, self::TYPE, self::AMOUNT, self::SHIPPING, self::MIN_TOTAL, self::SCOPE, self::CATEGORIES, self::LABEL, self::NOTICE );
+	}
+
+	/**
+	 * Option that records the one-time move of settings saved by version 2.0.0 and earlier.
+	 */
+	const MIGRATED = 'hdwc_migrated';
+
+	/**
+	 * Copies settings saved under the old "fdwc_" names (Fixed Deposit for WooCommerce 2.0.0 and
+	 * earlier) to the current names once, then removes the old ones. Settings already saved under
+	 * the current names are never overwritten.
+	 */
+	public static function migrate_legacy_options() {
+		if ( get_option( self::MIGRATED ) ) {
+			return;
+		}
+		foreach ( self::option_names() as $name ) {
+			$legacy = 'fdwc_' . substr( $name, strlen( 'hdwc_' ) );
+			$value  = get_option( $legacy, null );
+			if ( null !== $value && null === get_option( $name, null ) ) {
+				update_option( $name, $value );
+			}
+			delete_option( $legacy );
+		}
+		update_option( self::MIGRATED, '1' );
 	}
 
 	/**
@@ -116,7 +141,7 @@ final class FDWC_Settings {
 	 * @return string
 	 */
 	public static function default_label() {
-		return __( 'Balance due later', 'fixed-deposit-for-woocommerce' );
+		return __( 'Balance due later', 'halfway-deposits' );
 	}
 
 	/**
@@ -135,6 +160,6 @@ final class FDWC_Settings {
 	 * @return string
 	 */
 	public static function default_notice() {
-		return __( 'Only a deposit is due today. The remaining balance is shown in the order totals, and we will send you an invoice for it later.', 'fixed-deposit-for-woocommerce' );
+		return __( 'Only a deposit is due today. The remaining balance is shown in the order totals, and we will send you an invoice for it later.', 'halfway-deposits' );
 	}
 }

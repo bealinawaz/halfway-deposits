@@ -2,7 +2,7 @@
 /**
  * Saves the deposit split on orders and shows it to customers and the store.
  *
- * @package Fixed_Deposit_For_WooCommerce
+ * @package Halfway_Deposits
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,11 +10,11 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Order meta and order totals rows.
  */
-final class FDWC_Orders {
+final class HDWC_Orders {
 
-	const META_ORDER_VALUE = '_fdwc_order_value';
-	const META_DEPOSIT     = '_fdwc_deposit';
-	const META_BALANCE     = '_fdwc_balance_due';
+	const META_ORDER_VALUE = '_hdwc_order_value';
+	const META_DEPOSIT     = '_hdwc_deposit';
+	const META_BALANCE     = '_hdwc_balance_due';
 
 	/**
 	 * Registers hooks.
@@ -40,14 +40,14 @@ final class FDWC_Orders {
 			return;
 		}
 		$fees = WC()->cart->get_fees();
-		if ( ! isset( $fees[ FDWC_Deposit::FEE_ID ] ) ) {
+		if ( ! isset( $fees[ HDWC_Deposit::FEE_ID ] ) ) {
 			$order->delete_meta_data( self::META_ORDER_VALUE );
 			$order->delete_meta_data( self::META_DEPOSIT );
 			$order->delete_meta_data( self::META_BALANCE );
 			return;
 		}
 		$decimals = wc_get_price_decimals();
-		$balance  = round( abs( (float) $fees[ FDWC_Deposit::FEE_ID ]->total ), $decimals );
+		$balance  = round( abs( (float) $fees[ HDWC_Deposit::FEE_ID ]->total ), $decimals );
 		$deposit  = round( (float) WC()->cart->get_total( 'edit' ), $decimals );
 
 		$order->update_meta_data( self::META_ORDER_VALUE, wc_format_decimal( $deposit + $balance, $decimals ) );
@@ -62,14 +62,25 @@ final class FDWC_Orders {
 	 * @return array|null
 	 */
 	public static function get_split( $order ) {
-		if ( ! $order instanceof WC_Order || '' === (string) $order->get_meta( self::META_BALANCE ) ) {
+		if ( ! $order instanceof WC_Order ) {
 			return null;
 		}
-		return array(
-			'order_value' => (float) $order->get_meta( self::META_ORDER_VALUE ),
-			'deposit'     => (float) $order->get_meta( self::META_DEPOSIT ),
-			'balance'     => (float) $order->get_meta( self::META_BALANCE ),
-		);
+		if ( '' !== (string) $order->get_meta( self::META_BALANCE ) ) {
+			return array(
+				'order_value' => (float) $order->get_meta( self::META_ORDER_VALUE ),
+				'deposit'     => (float) $order->get_meta( self::META_DEPOSIT ),
+				'balance'     => (float) $order->get_meta( self::META_BALANCE ),
+			);
+		}
+		// Orders placed with version 2.0.0 and earlier saved the split under the old "_fdwc_" keys.
+		if ( '' !== (string) $order->get_meta( '_fdwc_balance_due' ) ) {
+			return array(
+				'order_value' => (float) $order->get_meta( '_fdwc_order_value' ),
+				'deposit'     => (float) $order->get_meta( '_fdwc_deposit' ),
+				'balance'     => (float) $order->get_meta( '_fdwc_balance_due' ),
+			);
+		}
+		return null;
 	}
 
 	/**
@@ -79,7 +90,7 @@ final class FDWC_Orders {
 	 * @return string
 	 */
 	private static function deposit_label( $order ) {
-		return $order->is_paid() ? __( 'Deposit paid:', 'fixed-deposit-for-woocommerce' ) : __( 'Deposit due now:', 'fixed-deposit-for-woocommerce' );
+		return $order->is_paid() ? __( 'Deposit paid:', 'halfway-deposits' ) : __( 'Deposit due now:', 'halfway-deposits' );
 	}
 
 	/**
@@ -97,16 +108,16 @@ final class FDWC_Orders {
 		}
 		$currency = array( 'currency' => $order->get_currency() );
 		$extra    = array(
-			'fdwc_order_value' => array(
-				'label' => __( 'Order value:', 'fixed-deposit-for-woocommerce' ),
+			'hdwc_order_value' => array(
+				'label' => __( 'Order value:', 'halfway-deposits' ),
 				'value' => wc_price( $split['order_value'], $currency ),
 			),
-			'fdwc_deposit'     => array(
+			'hdwc_deposit'     => array(
 				'label' => self::deposit_label( $order ),
 				'value' => wc_price( $split['deposit'], $currency ),
 			),
-			'fdwc_balance_due' => array(
-				'label' => __( 'Balance due:', 'fixed-deposit-for-woocommerce' ),
+			'hdwc_balance_due' => array(
+				'label' => __( 'Balance due:', 'halfway-deposits' ),
 				'value' => wc_price( $split['balance'], $currency ),
 			),
 		);
@@ -131,13 +142,13 @@ final class FDWC_Orders {
 		}
 		$currency = array( 'currency' => $order->get_currency() );
 		$rows     = array(
-			array( __( 'Order value:', 'fixed-deposit-for-woocommerce' ), $split['order_value'] ),
+			array( __( 'Order value:', 'halfway-deposits' ), $split['order_value'] ),
 			array( self::deposit_label( $order ), $split['deposit'] ),
-			array( __( 'Balance due:', 'fixed-deposit-for-woocommerce' ), $split['balance'] ),
+			array( __( 'Balance due:', 'halfway-deposits' ), $split['balance'] ),
 		);
 		foreach ( $rows as $row ) {
 			?>
-			<tr class="fdwc-admin-total">
+			<tr class="hdwc-admin-total">
 				<td class="label"><?php echo esc_html( $row[0] ); ?></td>
 				<td width="1%"></td>
 				<td class="total"><?php echo wp_kses_post( wc_price( $row[1], $currency ) ); ?></td>

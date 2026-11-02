@@ -1,11 +1,11 @@
-=== Fixed Deposit for WooCommerce – Take a Set Deposit at Checkout ===
+=== Halfway – Deposits for WooCommerce ===
 Contributors: imalinawaz
 Donate link: https://www.buymeacoffee.com/bealinawaz
-Tags: woocommerce deposit, deposit, partial payment, down payment, pay deposit
+Tags: deposit, partial payment, down payment, woocommerce, checkout
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Take a fixed amount or a percentage of the order as a deposit at WooCommerce che
 
 == Description ==
 
-Fixed Deposit for WooCommerce lets customers pay a deposit at checkout instead of the full order total. Choose a fixed amount, such as $50, or a percentage of the order, such as 25%. The rest of the order is shown as a "Balance due later" line in the cart and checkout, and the order records the full order value, the deposit, and the balance due.
+Halfway – Deposits for WooCommerce lets customers pay a deposit at checkout instead of the full order total. Choose a fixed amount, such as $50, or a percentage of the order, such as 25%. The rest of the order is shown as a "Balance due later" line in the cart and checkout, and the order records the full order value, the deposit, and the balance due.
 
 It suits made-to-order products, furniture, events, bookings, custom work, and any store that takes a down payment before the rest is settled.
 
@@ -36,7 +36,7 @@ The order value is the products after discounts, plus tax, plus other fees, plus
 
 **Custom development**
 
-Need automatic balance payments, scheduled payment plans, per-product deposit rules, or deposits that follow your local tax rules? The plugin is built and maintained by Ali Nawaz, a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=fixed-deposit-for-woocommerce).
+Need automatic balance payments, scheduled payment plans, per-product deposit rules, or deposits that follow your local tax rules? The plugin is built and maintained by Ali Nawaz, a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=halfway-deposits).
 
 == Installation ==
 
@@ -82,8 +82,12 @@ Version 1.0 always reduced the cart to exactly 1 with an "Adjustment" line. Vers
 
 == Changelog ==
 
+= 2.1.0 (2026-11-02) =
+* Renamed to Halfway – Deposits for WooCommerce (slug and text domain halfway-deposits).
+* Settings and order data now use the hdwc_ prefix. Settings saved by 2.0.0 move across automatically once, and orders placed with 2.0.0 still show their deposit and balance.
+
 = 2.0.0 =
-* Complete rewrite as Fixed Deposit for WooCommerce. Version 1.0 always forced the cart total to 1; deposits are now configurable and off until you enable them.
+* Complete rewrite as Halfway – Deposits for WooCommerce. Version 1.0 always forced the cart total to 1; deposits are now configurable and off until you enable them.
 * New: settings under WooCommerce → Settings → Deposit.
 * New: fixed or percentage deposits, shipping handling, minimum order value, and category rules.
 * New: balance line label and cart and checkout notice.
@@ -96,6 +100,9 @@ Version 1.0 always reduced the cart to exactly 1 with an "Adjustment" line. Vers
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+New name and prefix. Your settings move across automatically; nothing to do.
 
 = 2.0.0 =
 Complete rewrite. Deposits are off after updating: enable them and set the amount under WooCommerce → Settings → Deposit.
