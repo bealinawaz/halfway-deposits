@@ -1,7 +1,12 @@
 # Halfway – Deposits for WooCommerce
 
+Formerly Fixed Deposit for WooCommerce. Renamed to Halfway in 2.1.0; settings move across automatically.
+
+**Install from WordPress.org:** [wordpress.org/plugins/halfway-deposits](https://wordpress.org/plugins/halfway-deposits/), or search for "Halfway Deposits" under Plugins → Add New in your dashboard.
+
 Take a fixed amount or a percentage of the order as a deposit at WooCommerce checkout. The rest of the order is shown as a "Balance due later" line, and each order records the full order value, the deposit, and the balance due.
 
+![WordPress.org plugin](https://img.shields.io/wordpress/plugin/v/halfway-deposits?label=WordPress.org)
 ![Tested up to WordPress 7.1](https://img.shields.io/badge/WordPress-7.1-blue)
 ![WooCommerce 7.1+](https://img.shields.io/badge/WooCommerce-7.1%2B-7f54b3)
 ![PHP 7.4 to 8.5](https://img.shields.io/badge/PHP-7.4%E2%80%938.5-777bb4)
@@ -20,7 +25,7 @@ Take a fixed amount or a percentage of the order as a deposit at WooCommerce che
 
 ## Setup
 
-1. Install WooCommerce and activate the plugin.
+1. Install WooCommerce, then install **Halfway – Deposits for WooCommerce** from Plugins → Add New (or upload the zip from the [latest release](https://github.com/bealinawaz/halfway-deposits/releases/latest)) and activate it.
 2. **WooCommerce → Settings → Deposit**: enable deposits and set the type and amount.
 
 ## How it works
