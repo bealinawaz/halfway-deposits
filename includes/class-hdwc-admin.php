@@ -72,7 +72,7 @@ final class HDWC_Admin {
 				<?php
 				printf(
 					/* translators: %s: link to the author's website. */
-					esc_html__( 'Halfway – Deposits for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need automatic balance payments, payment plans, or per-product deposit rules?', 'halfway-deposits' ),
+					esc_html__( 'Halfway – Deposits & Partial Payments for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need automatic balance payments, payment plans, or per-product deposit rules?', 'halfway-deposits' ),
 					'<a href="' . esc_url( self::AUTHOR_URL ) . '" target="_blank" rel="noopener">bealinawaz.com</a>'
 				);
 				?>
