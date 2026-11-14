@@ -3,7 +3,7 @@
  * Plugin Name:          Halfway – Deposits & Partial Payments for WooCommerce
  * Plugin URI:           https://github.com/bealinawaz/halfway-deposits
  * Description:          Take a deposit or partial payment at checkout: a fixed amount or a percentage of the order. The balance is requested later in one click and paid on WooCommerce's payment page.
- * Version:              2.2.0
+ * Version:              2.2.1
  * Requires at least:    6.2
  * Requires PHP:         7.4
  * Requires Plugins:     woocommerce
@@ -12,6 +12,7 @@
  * License:              GPLv2 or later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:          halfway-deposits
+ * Domain Path:          /languages
  * WC requires at least: 7.1
  * WC tested up to:      11.3
  *
@@ -20,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'HDWC_VERSION', '2.2.0' );
+define( 'HDWC_VERSION', '2.2.1' );
 define( 'HDWC_FILE', __FILE__ );
 
 require_once __DIR__ . '/includes/class-hdwc-settings.php';
