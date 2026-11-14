@@ -4,7 +4,7 @@ Formerly Fixed Deposit for WooCommerce. Renamed to Halfway in 2.1.0; settings mo
 
 **Install from WordPress.org:** [wordpress.org/plugins/halfway-deposits](https://wordpress.org/plugins/halfway-deposits/), or search for "Halfway Deposits" under Plugins → Add New in your dashboard.
 
-Take a deposit or partial payment at WooCommerce checkout: a fixed amount or a percentage of the order. The rest of the order is shown as a "Balance due later" line, and each order records the full order value, the deposit, and the balance due.
+Take a deposit or partial payment at WooCommerce checkout: a fixed amount or a percentage of the order. The rest of the order is shown as a "Balance due later" line, each order records the full order value, the deposit, and the balance due, and the balance is requested later in one click with a payment link.
 
 ![WordPress.org plugin](https://img.shields.io/wordpress/plugin/v/halfway-deposits?label=WordPress.org)
 ![Tested up to WordPress 7.1](https://img.shields.io/badge/WordPress-7.1-blue)
@@ -12,7 +12,7 @@ Take a deposit or partial payment at WooCommerce checkout: a fixed amount or a p
 ![PHP 7.4 to 8.5](https://img.shields.io/badge/PHP-7.4%E2%80%938.5-777bb4)
 ![License GPLv2 or later](https://img.shields.io/badge/license-GPLv2%2B-green)
 
-> The balance is **not** collected automatically. The store collects it manually, for example with a new order for the balance and its "Customer payment page" link.
+> The balance is never charged automatically. The store clicks **Request balance payment** on the order, and the customer pays the balance order on WooCommerce's payment page.
 
 ## Features
 
@@ -21,6 +21,8 @@ Take a deposit or partial payment at WooCommerce checkout: a fixed amount or a p
 - Minimum order value and product category rules (applies when any cart item matches; subcategories included).
 - Editable balance line label and cart/checkout notice.
 - Order value, deposit, and balance due on the admin order screen, order received page, My Account, and emails.
+- One-click balance request (2.2.0): a Deposit balance box on the order, an Order action and a bulk action create a linked balance order and email the payment link with WooCommerce's "Order details" email.
+- Pay balance button in My Account; the deposit order shows "Balance paid" when the balance order is paid, optionally marking it Completed.
 - Classic and block cart/checkout (Store API), HPOS compatible.
 
 ## Setup
@@ -34,6 +36,7 @@ Take a deposit or partial payment at WooCommerce checkout: a fixed amount or a p
 - WooCommerce spreads tax over negative fees, so the plugin removes the tax from this line in the cart (`woocommerce_cart_totals_get_fees_from_cart_taxes`) and on order recalculation (`woocommerce_order_item_fee_after_calculate_taxes`). Tax is charged in full with the deposit.
 - A one-time recalculation corrects any one-cent rounding difference.
 - WooCommerce will not let negative fees reduce the total below the order's tax, so a deposit smaller than the tax results in the tax amount being charged.
+- Balance requests: `HDWC_Balance::create()` builds a pending order with one untaxed fee line ("Balance for order #123") and links the two orders with `_hdwc_balance_order_id` and `_hdwc_deposit_order_id`. `woocommerce_order_status_changed` sets `_hdwc_balance_paid` on the deposit order when the balance order reaches a paid status, and clears it if the balance order is refunded or cancelled. Hooks: `hdwc_balance_order_created`, `hdwc_balance_paid`.
 - Order meta (`_hdwc_order_value`, `_hdwc_deposit`, `_hdwc_balance_due`) is saved on `woocommerce_checkout_create_order` (classic) and `woocommerce_store_api_checkout_update_order_meta` (blocks), and shown through `woocommerce_get_order_item_totals` and `woocommerce_admin_order_totals_after_total`.
 
 ## Project structure
@@ -43,6 +46,7 @@ halfway-deposits.php        Plugin header, bootstrap, WooCommerce compatibility
 includes/class-hdwc-settings.php         Reads and validates settings
 includes/class-hdwc-deposit.php          Cart calculation, tax handling, notices
 includes/class-hdwc-orders.php           Order meta and totals rows
+includes/class-hdwc-balance.php          Balance orders, payment links, My Account and admin box
 includes/class-hdwc-settings-page.php    WooCommerce → Settings → Deposit tab
 includes/class-hdwc-admin.php            Tab registration, plugin links, support box
 assets/admin.css                         Admin styles
@@ -52,7 +56,7 @@ readme.txt                               WordPress.org readme
 
 ## Custom development
 
-Need automatic balance payments, payment plans, or per-product deposit rules? The plugin is built and maintained by [Ali Nawaz](https://bealinawaz.com/?utm_source=github&utm_medium=readme&utm_campaign=halfway-deposits), a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=github&utm_medium=readme&utm_campaign=halfway-deposits).
+Need automatic card charging for the balance, payment plans, or per-product deposit rules? The plugin is built and maintained by [Ali Nawaz](https://bealinawaz.com/?utm_source=github&utm_medium=readme&utm_campaign=halfway-deposits), a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=github&utm_medium=readme&utm_campaign=halfway-deposits).
 
 ## License
 

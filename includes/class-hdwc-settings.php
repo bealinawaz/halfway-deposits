@@ -21,6 +21,7 @@ final class HDWC_Settings {
 	const CATEGORIES = 'hdwc_categories';
 	const LABEL      = 'hdwc_label';
 	const NOTICE     = 'hdwc_notice';
+	const AFTER_PAID = 'hdwc_status_after_balance';
 
 	/**
 	 * All option names, for uninstall and tests.
@@ -152,6 +153,20 @@ final class HDWC_Settings {
 	public static function notice() {
 		$notice = trim( (string) get_option( self::NOTICE, '' ) );
 		return '' !== $notice ? $notice : self::default_notice();
+	}
+
+	/**
+	 * Default cart and checkout notice.
+	 *
+	 * @return string
+	 */
+	/**
+	 * Status the deposit order moves to when its balance is paid, or an empty string to leave it.
+	 *
+	 * @return string
+	 */
+	public static function status_after_balance() {
+		return 'completed' === get_option( self::AFTER_PAID, '' ) ? 'completed' : '';
 	}
 
 	/**

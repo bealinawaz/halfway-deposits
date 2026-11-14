@@ -145,6 +145,27 @@ final class HDWC_Settings_Page extends WC_Settings_Page {
 				'type' => 'sectionend',
 				'id'   => 'hdwc_options',
 			),
+			array(
+				'title' => __( 'Balance payment', 'halfway-deposits' ),
+				'type'  => 'title',
+				'desc'  => __( 'Open an order that has a balance due and click "Request balance payment" in the Deposit balance box, or select several orders and use the bulk action. Halfway creates a balance order and emails the customer WooCommerce\'s "Order details" email with a link to pay it with any of your payment methods. Customers also see a "Pay balance" button in My Account.', 'halfway-deposits' ),
+				'id'    => 'hdwc_balance_options',
+			),
+			array(
+				'title'   => __( 'When the balance is paid', 'halfway-deposits' ),
+				'id'      => HDWC_Settings::AFTER_PAID,
+				'type'    => 'select',
+				'default' => '',
+				'desc'    => __( 'The balance order is always marked as paid. This setting decides what happens to the original deposit order.', 'halfway-deposits' ),
+				'options' => array(
+					''          => __( 'Keep the deposit order status', 'halfway-deposits' ),
+					'completed' => __( 'Mark the deposit order as Completed', 'halfway-deposits' ),
+				),
+			),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'hdwc_balance_options',
+			),
 		);
 	}
 

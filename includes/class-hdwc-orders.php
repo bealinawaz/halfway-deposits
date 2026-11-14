@@ -94,6 +94,16 @@ final class HDWC_Orders {
 	}
 
 	/**
+	 * Label for the balance row: "Balance paid" once the balance order is paid.
+	 *
+	 * @param WC_Order $order Order.
+	 * @return string
+	 */
+	private static function balance_label( $order ) {
+		return class_exists( 'HDWC_Balance' ) && HDWC_Balance::is_paid( $order ) ? __( 'Balance paid:', 'halfway-deposits' ) : __( 'Balance due:', 'halfway-deposits' );
+	}
+
+	/**
 	 * Adds order value, deposit, and balance rows after the order total. Used on the
 	 * order received page, My Account order details, and order emails.
 	 *
@@ -117,7 +127,7 @@ final class HDWC_Orders {
 				'value' => wc_price( $split['deposit'], $currency ),
 			),
 			'hdwc_balance_due' => array(
-				'label' => __( 'Balance due:', 'halfway-deposits' ),
+				'label' => self::balance_label( $order ),
 				'value' => wc_price( $split['balance'], $currency ),
 			),
 		);
@@ -144,7 +154,7 @@ final class HDWC_Orders {
 		$rows     = array(
 			array( __( 'Order value:', 'halfway-deposits' ), $split['order_value'] ),
 			array( self::deposit_label( $order ), $split['deposit'] ),
-			array( __( 'Balance due:', 'halfway-deposits' ), $split['balance'] ),
+			array( self::balance_label( $order ), $split['balance'] ),
 		);
 		foreach ( $rows as $row ) {
 			?>
