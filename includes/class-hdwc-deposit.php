@@ -106,7 +106,19 @@ final class HDWC_Deposit {
 	public static function add_balance_fee( $cart ) {
 		self::$split = null;
 
-		if ( ( is_admin() && ! wp_doing_ajax() ) || ! HDWC_Settings::enabled() || ! self::cart_qualifies( $cart ) ) {
+		if ( ( is_admin() && ! wp_doing_ajax() ) || ! HDWC_Settings::enabled() ) {
+			return;
+		}
+
+		/**
+		 * Filters whether a deposit applies to the cart, after the category rule is checked.
+		 *
+		 * @since 2.2.2
+		 *
+		 * @param bool    $qualifies Whether the cart qualifies for a deposit.
+		 * @param WC_Cart $cart      Cart.
+		 */
+		if ( ! apply_filters( 'hdwc_cart_qualifies', self::cart_qualifies( $cart ), $cart ) ) {
 			return;
 		}
 
@@ -124,7 +136,15 @@ final class HDWC_Deposit {
 			}
 		}
 
-		$min_total = HDWC_Settings::min_total();
+		/**
+		 * Filters the minimum order value for a deposit in this cart. 0 means none.
+		 *
+		 * @since 2.2.2
+		 *
+		 * @param float   $min_total Minimum order value from the settings.
+		 * @param WC_Cart $cart      Cart.
+		 */
+		$min_total = (float) apply_filters( 'hdwc_min_total', HDWC_Settings::min_total(), $cart );
 		if ( $min_total > 0 && $products < $min_total ) {
 			return;
 		}
@@ -132,7 +152,17 @@ final class HDWC_Deposit {
 		$order_value = round( $products + $shipping + $fees, $decimals );
 		$base        = 'split' === HDWC_Settings::shipping() ? $order_value : round( $products + $fees, $decimals );
 		$deposit     = 'percent' === HDWC_Settings::type() ? $base * HDWC_Settings::amount() / 100 : HDWC_Settings::amount();
-		$deposit     = round( $deposit, $decimals );
+
+		/**
+		 * Filters the deposit amount before it is rounded and compared with the order value.
+		 *
+		 * @since 2.2.2
+		 *
+		 * @param float   $deposit Deposit amount.
+		 * @param float   $base    Order value the deposit is taken from.
+		 * @param WC_Cart $cart    Cart.
+		 */
+		$deposit = round( (float) apply_filters( 'hdwc_deposit_amount', $deposit, $base, $cart ), $decimals );
 
 		// Nothing to defer when the order is already at or below the deposit.
 		if ( $deposit <= 0 || $base <= $deposit ) {

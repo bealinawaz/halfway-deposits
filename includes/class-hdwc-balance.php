@@ -256,7 +256,16 @@ final class HDWC_Balance {
 		}
 
 		$paid_statuses = wc_get_is_paid_statuses();
-		if ( in_array( $to, $paid_statuses, true ) && ! self::is_paid( $deposit ) ) {
+		/**
+		 * Filters whether paying this balance order settles the balance of the deposit order.
+		 *
+		 * @since 2.2.2
+		 *
+		 * @param bool     $settles Whether the balance is settled when this order is paid.
+		 * @param WC_Order $deposit Deposit order.
+		 * @param WC_Order $order   Balance order.
+		 */
+		if ( in_array( $to, $paid_statuses, true ) && ! self::is_paid( $deposit ) && apply_filters( 'hdwc_balance_order_settles_deposit', true, $deposit, $order ) ) {
 			$deposit->update_meta_data( self::META_PAID, gmdate( 'Y-m-d H:i:s' ) );
 			/* translators: %s: balance order number. */
 			$deposit->add_order_note( sprintf( __( 'Balance paid in order #%s.', 'halfway-deposits' ), $order->get_order_number() ) );

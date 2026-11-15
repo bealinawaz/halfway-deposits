@@ -5,7 +5,7 @@ Tags: deposit, partial payment, woocommerce deposits, woocommerce partial paymen
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,9 @@ The plugin is ready for translation, and translations are made by volunteers on 
 
 == Changelog ==
 
+= 2.2.2 (2026-11-15) =
+* Developers: new filters hdwc_cart_qualifies, hdwc_min_total, hdwc_deposit_amount and hdwc_balance_order_settles_deposit, so add-ons can extend the deposit rules and the balance payment. No change to how the plugin works.
+
 = 2.2.1 (2026-11-15) =
 * Translations: a translation template (languages/halfway-deposits.pot) is included, and the readme explains how to translate the plugin on translate.wordpress.org.
 * Right-to-left languages: the settings support box now uses logical CSS, so it displays correctly in Arabic, Hebrew, Urdu and other RTL languages.
@@ -170,6 +173,9 @@ The plugin is ready for translation, and translations are made by volunteers on 
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.2.2 =
+New developer filters only. Nothing to change.
 
 = 2.2.1 =
 Translation and right-to-left language improvements. Nothing to change.
