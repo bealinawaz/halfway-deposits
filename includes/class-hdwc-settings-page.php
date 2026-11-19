@@ -52,7 +52,7 @@ final class HDWC_Settings_Page extends WC_Settings_Page {
 			array(
 				'title' => __( 'Deposit at checkout', 'halfway-deposits' ),
 				'type'  => 'title',
-				'desc'  => __( 'Customers pay a deposit at checkout. The rest of the order appears as a negative line in the cart, checkout, and order, and is saved as the balance due on the order. Collecting the balance is up to you, for example by creating a new order for the balance and sending the customer its payment link.', 'halfway-deposits' ),
+				'desc'  => __( 'Customers pay a deposit at checkout. The rest of the order appears as a negative line in the cart, checkout, and order, and is saved as the balance due on the order. When you are ready for the rest, click Request balance payment on the order: the customer gets an email with a link to pay the balance.', 'halfway-deposits' ),
 				'id'    => 'hdwc_options',
 			),
 			array(
@@ -174,6 +174,7 @@ final class HDWC_Settings_Page extends WC_Settings_Page {
 	 */
 	public function output() {
 		parent::output();
+		HDWC_Admin::render_pro_box();
 		HDWC_Admin::render_support();
 	}
 }

@@ -62,6 +62,40 @@ final class HDWC_Admin {
 	}
 
 	/**
+	 * Page of the Halfway Pro add-on on the author's site.
+	 */
+	const PRO_URL = 'https://bealinawaz.com/wordpress-plugins/pro/halfway/';
+
+	/**
+	 * Whether the Halfway Pro add-on is active. Checked when rendering, because Pro loads after the free plugin.
+	 *
+	 * @return bool
+	 */
+	public static function pro_active() {
+		return defined( 'HDWC_PRO_VERSION' );
+	}
+
+	/**
+	 * One short note about the Pro add-on on the Deposit settings tab, only while Pro isn't active.
+	 */
+	public static function render_pro_box() {
+		if ( self::pro_active() ) {
+			return;
+		}
+		?>
+		<div class="hdwc-pro">
+			<h2><?php esc_html_e( 'Need more? Halfway Pro', 'halfway-deposits' ); ?></h2>
+			<ul class="ul-disc">
+				<li><?php esc_html_e( 'Balance due dates for the store, a product or a single order, with reminder emails before, on and after the due date.', 'halfway-deposits' ); ?></li>
+				<li><?php esc_html_e( 'Payment plans that split the balance into several payments, each with its own payment link and reminders.', 'halfway-deposits' ); ?></li>
+				<li><?php esc_html_e( 'Deposit rules by product, customer role, billing country and payment method, with a minimum and maximum deposit.', 'halfway-deposits' ); ?></li>
+			</ul>
+			<p><a class="button" href="<?php echo esc_url( self::PRO_URL ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'See Halfway Pro', 'halfway-deposits' ); ?></a></p>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Prints the support box below the settings.
 	 */
 	public static function render_support() {
@@ -72,7 +106,7 @@ final class HDWC_Admin {
 				<?php
 				printf(
 					/* translators: %s: link to the author's website. */
-					esc_html__( 'Halfway – Deposits & Partial Payments for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need automatic balance payments, payment plans, or per-product deposit rules?', 'halfway-deposits' ),
+					esc_html__( 'Halfway – Deposits & Partial Payments for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need the balance charged automatically with your payment gateway, or another custom change?', 'halfway-deposits' ),
 					'<a href="' . esc_url( self::AUTHOR_URL ) . '" target="_blank" rel="noopener">bealinawaz.com</a>'
 				);
 				?>
@@ -107,6 +141,9 @@ final class HDWC_Admin {
 	public static function row_meta( $links, $file ) {
 		if ( plugin_basename( HDWC_FILE ) !== $file ) {
 			return $links;
+		}
+		if ( ! self::pro_active() ) {
+			$links[] = '<a href="' . esc_url( self::PRO_URL ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Halfway Pro', 'halfway-deposits' ) . '</a>';
 		}
 		$links[] = '<a href="' . esc_url( self::CONTACT_URL ) . '" target="_blank" rel="noopener">' . esc_html__( 'Custom development', 'halfway-deposits' ) . '</a>';
 		$links[] = '<a href="' . esc_url( self::DONATE_URL ) . '" target="_blank" rel="noopener">' . esc_html__( 'Buy me a coffee', 'halfway-deposits' ) . '</a>';

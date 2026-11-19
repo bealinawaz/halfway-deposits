@@ -1,21 +1,23 @@
 === Halfway – Deposits & Partial Payments for WooCommerce ===
 Contributors: imalinawaz
 Donate link: https://www.buymeacoffee.com/bealinawaz
-Tags: deposit, partial payment, woocommerce deposits, woocommerce partial payment, down payment
+Tags: deposit, partial payment, woocommerce deposits, down payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Take a deposit or partial payment at WooCommerce checkout, then request the balance in one click with a payment link.
+Take a deposit or partial payment at WooCommerce checkout, by amount or percentage, then request the balance with a one-click payment link.
 
 == Description ==
 
 Halfway – Deposits & Partial Payments for WooCommerce lets customers pay a deposit (a partial payment or down payment) at checkout instead of the full order total. Choose a fixed amount, such as $50, or a percentage of the order, such as 25%. The rest of the order is shown as a "Balance due later" line in the cart and checkout, and the order records the full order value, the deposit, and the balance due.
 
 It suits made-to-order products, furniture, events, bookings, custom work, and any store that takes a down payment before the rest is settled.
+
+**Free, with no Pro needed:** fixed or percentage deposits, category rules, a minimum order value, shipping charged in full or included, the one-click balance request with a payment link, Pay balance in My Account, and both the block and classic checkout.
 
 **Collect the balance in one click.** When you are ready for the rest of the money, open the order and click **Request balance payment**. Halfway creates a balance order and emails the customer a link to pay it with any of your payment methods. Customers also get a **Pay balance** button in My Account, and the original order is marked as paid when the balance comes in. The balance is not charged automatically: you decide when to request it, and the customer pays it themselves.
 
@@ -38,9 +40,21 @@ It suits made-to-order products, furniture, events, bookings, custom work, and a
 
 The order value is the products after discounts, plus tax, plus other fees, plus shipping. If shipping is charged in full, the deposit is taken from the products and fees, and shipping is added on top. The plugin adds a negative, non-taxable line so the total to pay equals the deposit. Taxes are charged in full with the deposit and the balance carries no tax. If the order is already at or below the deposit amount, no deposit is taken and the customer pays the full total.
 
+**Halfway Pro**
+
+Halfway Pro is a separate add-on for stores that want the balance collected without chasing it. The free plugin keeps every feature above, and Pro adds:
+
+* **Balance due dates:** a number of days after purchase or a fixed date, for the whole store, per product (the earliest date in the cart wins) or changed on a single order. The date appears in order emails, My Account, the order received page and the order screen.
+* **Automatic reminders:** the "Balance payment reminder" email, with the payment link, goes out on the days you choose before, on and after the due date. It is a normal WooCommerce email you can edit, and a "Send reminder now" button covers one-off nudges.
+* **Overdue handling:** an order note and a "Balance overdue" email to the store the day after the due date, and an optional automatic cancel of the unpaid balance (off by default; it never refunds).
+* **Payment plans:** split the balance into several payments, days, weeks or months apart, each with its own payment link, due date and reminders, and a payment schedule in My Account.
+* **More deposit rules:** require a deposit on chosen products, take deposits only for selected customer roles (guests too), billing countries or payment methods, and set a minimum and maximum deposit.
+
+Like the free plugin, Pro never charges a card by itself: customers pay each balance from its payment link. Halfway Pro costs from $29 a year, with a 14-day refund policy. [See Halfway Pro](https://bealinawaz.com/wordpress-plugins/pro/halfway/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=halfway-deposits).
+
 **Custom development**
 
-Need automatic card charging for the balance, scheduled payment plans, per-product deposit rules, or deposits that follow your local tax rules? The plugin is built and maintained by Ali Nawaz, a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=halfway-deposits).
+Need the balance charged automatically to a saved card with your payment gateway, deposits that follow your local tax rules, or another change? The plugin is built and maintained by Ali Nawaz, a WordPress and WooCommerce developer. [Get in touch for custom work](https://bealinawaz.com/contact-me/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=halfway-deposits).
 
 == Installation ==
 
@@ -63,7 +77,7 @@ Open the order under WooCommerce → Orders and click **Request balance payment*
 
 = Does the plugin charge the remaining balance automatically? =
 
-No. The balance is never charged without the customer. You request it when you are ready, and the customer pays it on WooCommerce's payment page with any payment method you offer.
+No. The balance is never charged without the customer. You request it when you are ready, and the customer pays it on WooCommerce's payment page with any payment method you offer. Halfway Pro doesn't charge cards either; it sends reminders with the payment link on the dates you choose.
 
 = Can I change the balance before sending it, for example to add delivery? =
 
@@ -72,6 +86,10 @@ Yes. Click **Create the balance order without emailing**, edit the balance order
 = What happens when the balance is paid? =
 
 The balance order is marked as paid like any order, and the original order shows "Balance paid". Under WooCommerce → Settings → Deposit → Balance payment you can also have the original order marked as Completed at that point.
+
+= Can Halfway set a due date for the balance and send reminders? =
+
+The free plugin records the balance and lets you request it in one click whenever you are ready. Halfway Pro adds a due date to every balance (days after purchase or a fixed date, per store, product or order) and emails the customer a reminder with the payment link before, on and after that date. If the balance stays unpaid, the store gets a "Balance overdue" email.
 
 = What if the customer's payment fails? =
 
@@ -103,7 +121,7 @@ Not in this version. When an order matches your rules (minimum order value and c
 
 = Does it support installments or payment plans? =
 
-No. It takes one deposit at checkout and records one balance. Scheduled installments and automatic balance payments need custom development (see below).
+Not in the free plugin, which takes one deposit at checkout and records one balance. Halfway Pro adds payment plans: the balance is split into several payments, days, weeks or months apart, each with its own payment link, due date and reminders. Automatic charging of a saved card is not included in either version.
 
 = Can I use it for a refundable security deposit, for example on rentals? =
 
@@ -121,6 +139,10 @@ Yes. Refunds work as usual. The deposit is refunded from the original order and 
 
 Version 1.0 always reduced the cart to exactly 1 with an "Adjustment" line. Version 2.0 replaces it with configurable deposits and is off until you enable it.
 
+= What does Halfway Pro add? =
+
+Balance due dates, automatic reminder emails, overdue alerts with an optional automatic cancel, payment plans that split the balance into several payments, and more deposit rules: required deposits on chosen products, customer roles, billing countries, payment methods, and a minimum and maximum deposit. It is a separate add-on that needs this free plugin. See [Halfway Pro](https://bealinawaz.com/wordpress-plugins/pro/halfway/?utm_source=wordpress.org&utm_medium=plugin-readme&utm_campaign=halfway-deposits).
+
 = Is the plugin available in my language? =
 
 The plugin is ready for translation, and translations are made by volunteers on WordPress.org. You can help translate it into your language at [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/halfway-deposits/). Once a language is 90% translated, WordPress installs the translation automatically through language packs. A translation template, languages/halfway-deposits.pot, is included for tools such as Poedit and Loco Translate.
@@ -135,6 +157,11 @@ The plugin is ready for translation, and translations are made by volunteers on 
 6. My Account: the customer pays the balance with a Pay balance button.
 
 == Changelog ==
+
+= 2.2.3 (2026-11-19) =
+* The Deposit settings tab and the plugin's row on the Plugins screen mention the Halfway Pro add-on. Both are hidden when Pro is active.
+* The Deposit tab intro now explains the Request balance payment button (it still said collecting the balance was up to you).
+* Readme: Halfway Pro section, new questions on due dates, reminders and Pro, updated answers on payment plans.
 
 = 2.2.2 (2026-11-15) =
 * Developers: new filters hdwc_cart_qualifies, hdwc_min_total, hdwc_deposit_amount and hdwc_balance_order_settles_deposit, so add-ons can extend the deposit rules and the balance payment. No change to how the plugin works.
@@ -173,6 +200,9 @@ The plugin is ready for translation, and translations are made by volunteers on 
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.2.3 =
+Settings text and Halfway Pro information. Nothing to change.
 
 = 2.2.2 =
 New developer filters only. Nothing to change.

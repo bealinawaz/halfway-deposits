@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Halfway – Deposits & Partial Payments for WooCommerce 2.2.2\n"
+"Project-Id-Version: Halfway – Deposits & Partial Payments for WooCommerce 2.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/halfway-deposits\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-15T15:04:29+00:00\n"
+"POT-Creation-Date: 2026-11-19T06:28:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: halfway-deposits\n"
@@ -39,34 +39,58 @@ msgstr ""
 msgid "https://bealinawaz.com"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:70
+#: includes/class-hdwc-admin.php:87
+msgid "Need more? Halfway Pro"
+msgstr ""
+
+#: includes/class-hdwc-admin.php:89
+msgid "Balance due dates for the store, a product or a single order, with reminder emails before, on and after the due date."
+msgstr ""
+
+#: includes/class-hdwc-admin.php:90
+msgid "Payment plans that split the balance into several payments, each with its own payment link and reminders."
+msgstr ""
+
+#: includes/class-hdwc-admin.php:91
+msgid "Deposit rules by product, customer role, billing country and payment method, with a minimum and maximum deposit."
+msgstr ""
+
+#: includes/class-hdwc-admin.php:93
+msgid "See Halfway Pro"
+msgstr ""
+
+#: includes/class-hdwc-admin.php:104
 msgid "Need help or a custom version?"
 msgstr ""
 
 #. translators: %s: link to the author's website.
-#: includes/class-hdwc-admin.php:75
+#: includes/class-hdwc-admin.php:109
 #, php-format
-msgid "Halfway – Deposits & Partial Payments for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need automatic balance payments, payment plans, or per-product deposit rules?"
+msgid "Halfway – Deposits & Partial Payments for WooCommerce is free and built by Ali Nawaz, a WordPress and WooCommerce developer at %s. Need the balance charged automatically with your payment gateway, or another custom change?"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:81
+#: includes/class-hdwc-admin.php:115
 msgid "Hire me for custom work"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:82
+#: includes/class-hdwc-admin.php:116
 msgid "Visit bealinawaz.com"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:83
-#: includes/class-hdwc-admin.php:112
+#: includes/class-hdwc-admin.php:117
+#: includes/class-hdwc-admin.php:149
 msgid "Buy me a coffee"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:96
+#: includes/class-hdwc-admin.php:130
 msgid "Settings"
 msgstr ""
 
-#: includes/class-hdwc-admin.php:111
+#: includes/class-hdwc-admin.php:146
+msgid "Halfway Pro"
+msgstr ""
+
+#: includes/class-hdwc-admin.php:148
 msgid "Custom development"
 msgstr ""
 
@@ -291,7 +315,7 @@ msgid "Deposit at checkout"
 msgstr ""
 
 #: includes/class-hdwc-settings-page.php:55
-msgid "Customers pay a deposit at checkout. The rest of the order appears as a negative line in the cart, checkout, and order, and is saved as the balance due on the order. Collecting the balance is up to you, for example by creating a new order for the balance and sending the customer its payment link."
+msgid "Customers pay a deposit at checkout. The rest of the order appears as a negative line in the cart, checkout, and order, and is saved as the balance due on the order. When you are ready for the rest, click Request balance payment on the order: the customer gets an email with a link to pay the balance."
 msgstr ""
 
 #: includes/class-hdwc-settings-page.php:59
